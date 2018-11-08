@@ -3,18 +3,50 @@
 /*
 Description:
     Contains all the styles for the winning wheel page.
-    
+
 Verison History:
     2012-01-28, Douglas McKechie
     - Created based off earlier version.
-    
+
     2015-09-26, Douglas McKechie
     - Minor updates for the 2.0 winwheel example.
 */
 
+/* The only rule that matters */
+
+/* For image backgorund if we want that
+html {
+    background: url(bg.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+} */
+
+/* The only rule that matters */
+#video-background {
+    /*  making the video fullscreen  */
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -100;
+}
+
+@font-face {
+    font-family: "custfont";
+    src: url(archer.ttf) format("truetype");
+}
+p.customfont {
+    font-family: "custfont", Arial, Helvetica, sans-serif, Tahoma;
+}
+
 body
 {
-    font-family: arial;
+    font-family: custfont;
 }
 
 /* Sets the background image for the wheel */
@@ -28,7 +60,18 @@ td.the_wheel
 /* Do some css reset on selected elements */
 h1, p
 {
-    margin: 0;
+font-size: 75px;
+-webkit-text-fill-color: #85bb65;
+-webkit-text-stroke-color: white;
+-webkit-text-stroke-width: 1.25px;
+}
+
+h2
+{
+font-size: 40px;
+-webkit-text-fill-color: #85bb65;
+-webkit-text-stroke-color: white;
+-webkit-text-stroke-width: 1.25px;
 }
 
 div.power_controls

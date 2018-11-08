@@ -29,18 +29,15 @@
         <title>HTML5 Canvas Winning Wheel</title>
         <link rel="stylesheet" href="main.css" type="text/css" />
         <script type="text/javascript" src="Winwheel.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+        <script src="TweenMax.min.js"></script>
     </head>
     <body>
-        <div align="center">
+        <video autoplay loop id="video-background" muted plays-inline>
+            <source src="vid.mp4" type="video/mp4">
+        </video>
+        <div id="maindiv" align="center">
             <h1>GOK JE BOKBIER! ALTIJD PRIJS </h1>
-            <p></p>
-            <br/>
-            <p>
-            </p>
-            <br />
-            <p></p>
-            <br />
+
             <table cellpadding="0" cellspacing="0" border="0">
             <tr>
                 <td>
@@ -72,7 +69,7 @@
                 </td>
             </tr>
         </table>
-        <h1 id="prices"></h1>
+        <h2 id="prices"></h2>
         <script>
             var prices = new Array();
             // Create new wheel object specifying the parameters at creation time.
@@ -122,6 +119,7 @@
             // Vars used by the code in this page to do power controls.
             var wheelPower    = 0;
             var wheelSpinning = false;
+            var selected = false;
 
             // -------------------------------------------------------
             // Function to handle the onClick on the power buttons.
@@ -152,6 +150,7 @@
                     }
 
                     // Set wheelPower var used when spin button is clicked.
+                    selected = true;
                     wheelPower = powerLevel;
 
                     // Light up the spin button by changing it's source image and adding a clickable class to it.
@@ -165,11 +164,8 @@
             // -------------------------------------------------------
             function startSpin()
             {
-                if(wheelPower == 0){
-                    return
-                }
                 // Ensure that spinning can't be clicked again while already running.
-                if (wheelSpinning == false)
+                if (wheelSpinning == false & selected)
                 {
                     // Based on the power level selected adjust the number of spins for the wheel, the more times is has
                     // to rotate with the duration of the animation the quicker the wheel spins.
@@ -198,13 +194,15 @@
                     wheelSpinning = true;
                 }
             }
-
             // -------------------------------------------------------
             // Function for reset button.
             // -------------------------------------------------------
+
             function resetWheel()
             {
+                sleep(8000);
                 theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
+                theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
                 theWheel.draw();                // Call draw to render changes to the wheel.
 
                 document.getElementById('pw1').className = "";  // Remove all colours from the power level indicators.
@@ -212,7 +210,6 @@
                 document.getElementById('pw3').className = "";
 
                 wheelPower = 0;
-
                 wheelSpinning = false;          // Reset to false to power buttons and spin can be clicked again.
             }
 
@@ -251,7 +248,18 @@
                     document.getElementById("sound").innerHTML='<audio autoplay="autoplay">' + mp3Source + oggSource + embedSource + '</audio>';
                 }
                 resetWheel();
+                selected = false;
         }
+
+        function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds){
+                break;
+                }
+            }
+        }
+
         </script>
     </body>
 </html>
