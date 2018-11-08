@@ -72,7 +72,7 @@
                 </td>
             </tr>
         </table>
-        <h1 id="rounds"></h1>
+        <h1 id="prices"></h1>
         <script>
             var prices = new Array();
             // Create new wheel object specifying the parameters at creation time.
@@ -224,7 +224,7 @@
                 audio.play();
                 // updating array with new prices and updating html
                 prices.push(indicatedSegment.text);
-                document.getElementById("rounds").innerHTML = updatePrices();
+                document.getElementById("prices").innerHTML = updatePrices();
 
                 function updatePrices(){
                     if(prices.length >= 2){

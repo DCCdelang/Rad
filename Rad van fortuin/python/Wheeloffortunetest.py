@@ -41,6 +41,6 @@ labels, values = zip(*sorted(Counter(pricelist).items()))
 indexes = np.arange(len(labels))
 width = 1
 
-# plt.bar(indexes, values, width)
-# plt.xticks(indexes + width * 0.5, labels)
-# plt.show()
+plt.bar(indexes, values, width)
+plt.xticks(indexes + width * 0.5, labels)
+plt.show()
