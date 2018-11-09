@@ -30,6 +30,7 @@
         <link rel="stylesheet" href="main.css" type="text/css" />
         <script type="text/javascript" src="Winwheel.js"></script>
         <script src="TweenMax.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
         <video autoplay loop id="video-background" muted plays-inline>
@@ -40,7 +41,7 @@
 
             <table cellpadding="0" cellspacing="0" border="0">
             <tr>
-                <td>
+                <!-- <td>
                     <div class="power_controls">
                         <br />
                         <br />
@@ -52,7 +53,7 @@
                                 <td width="78" align="center" id="pw3" onClick="powerSelected(3);">Turbo</td>
                             </tr>
                             <tr>
-                                <td align="center" id="pw2" onClick="powerSelected(2);">Steady</td>
+                                <td align="center" id="pw2" onClick="">Steady</td>
                             </tr>
                             <tr>
                                 <td align="center" id="pw1" onClick="powerSelected(1);">Rustaagh</td>
@@ -61,7 +62,7 @@
                         <br />
                         <img id="spin_button" src="spin_off.png" alt="Spin" onClick="startSpin();" />
                     </div>
-                </td>
+                </td> -->
                 <td width="438" height="582" class="the_wheel" align="center" valign="center">
                     <canvas id="canvas" width="434" height="434">
                         <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
@@ -124,40 +125,19 @@
             // -------------------------------------------------------
             // Function to handle the onClick on the power buttons.
             // -------------------------------------------------------
-            function powerSelected(powerLevel)
-            {
-                // Ensure that power can't be changed while wheel is spinning.
-                if (wheelSpinning == false){
-                    // Reset all to grey incase this is not the first time the user has selected the power.
-                    document.getElementById('pw1').className = "";
-                    document.getElementById('pw2').className = "";
-                    document.getElementById('pw3').className = "";
+            // function powerSelected(powerLevel)
+            // {
+            //     // Ensure that power can't be changed while wheel is spinning.
+            //     if (wheelSpinning == false){
+            //         // Now light up all cells below-and-including the one selected by changing the class.
+            //         selected = true;
+            //         wheelPower = powerLevel;
 
-                    // Now light up all cells below-and-including the one selected by changing the class.
-                    if (powerLevel >= 1)
-                    {
-                        document.getElementById('pw1').className = "pw1";
-                    }
-
-                    if (powerLevel >= 2)
-                    {
-                        document.getElementById('pw2').className = "pw2";
-                    }
-
-                    if (powerLevel >= 3)
-                    {
-                        document.getElementById('pw3').className = "pw3";
-                    }
-
-                    // Set wheelPower var used when spin button is clicked.
-                    selected = true;
-                    wheelPower = powerLevel;
-
-                    // Light up the spin button by changing it's source image and adding a clickable class to it.
-                    document.getElementById('spin_button').src = "spin_on.png";
-                    document.getElementById('spin_button').className = "clickable";
-                }
-            }
+            //         // Light up the spin button by changing it's source image and adding a clickable class to it.
+            //         document.getElementById('spin_button').src = "spin_on.png";
+            //         document.getElementById('spin_button').className = "clickable";
+            //     }
+            // }
 
             // -------------------------------------------------------
             // Click handler for spin button.
@@ -165,7 +145,7 @@
             function startSpin()
             {
                 // Ensure that spinning can't be clicked again while already running.
-                if (wheelSpinning == false & selected)
+                if (wheelSpinning == false)
                 {
                     // Based on the power level selected adjust the number of spins for the wheel, the more times is has
                     // to rotate with the duration of the animation the quicker the wheel spins.
@@ -182,9 +162,9 @@
                         theWheel.animation.spins = 9;
                     }
 
-                    // Disable the spin button so can't click again while wheel is spinning.
-                    document.getElementById('spin_button').src       = "spin_off.png";
-                    document.getElementById('spin_button').className = "";
+                    // // Disable the spin button so can't click again while wheel is spinning.
+                    // document.getElementById('spin_button').src       = "spin_off.png";
+                    // document.getElementById('spin_button').className = "";
 
                     // Begin the spin animation by calling startAnimation on the wheel object.
                     theWheel.startAnimation();
@@ -200,14 +180,9 @@
 
             function resetWheel()
             {
-                sleep(8000);
                 theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
                 theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
                 theWheel.draw();                // Call draw to render changes to the wheel.
-
-                document.getElementById('pw1').className = "";  // Remove all colours from the power level indicators.
-                document.getElementById('pw2').className = "";
-                document.getElementById('pw3').className = "";
 
                 wheelPower = 0;
                 wheelSpinning = false;          // Reset to false to power buttons and spin can be clicked again.
@@ -240,26 +215,26 @@
                         return "Geen spel gespeeld!";
                     }
                 }
-
-                function playSound(filename){
-                    var mp3Source = '<source src="' + filename + '.mp3" type="audio/mpeg">';
-                    var oggSource = '<source src="' + filename + '.ogg" type="audio/ogg">';
-                    var embedSource = '<embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3">';
-                    document.getElementById("sound").innerHTML='<audio autoplay="autoplay">' + mp3Source + oggSource + embedSource + '</audio>';
-                }
-                resetWheel();
-                selected = false;
+                setTimeout(function(){
+                     resetWheel();
+                }, 10000);
         }
 
         function sleep(milliseconds) {
             var start = new Date().getTime();
             for (var i = 0; i < 1e7; i++) {
                 if ((new Date().getTime() - start) > milliseconds){
-                break;
+                    break;
                 }
             }
         }
 
+        $(document).keypress(function(event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                startSpin();
+            }
+        })
         </script>
     </body>
 </html>
